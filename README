@@ -1,0 +1,91 @@
+fSCA - functional/featural Sound Change Applier
+
+I know there are other people who have similar projects out there, but I
+haven't looked at their projects or code; they just provided the inspiration.
+If you want to see this kind of project done by someone who knows what
+they're doing, look up HaSC by user chris_notts on the ZBB
+(https://verduria.org).
+
+ok so goals/design:
+
+	- IPA/phonetic-based sound change applier
+	- rules:
+		- romanization -> IPA
+			- (need support for unicode chars)
+			- could maybe be at top of sc rule file
+		- sound change rules (general format of "target > new /env")
+			- want more general rules relating to vowel changes,
+			  like being able to do unstressed vowel syncope etc.
+			- user doesnt have to define categories unless they differ
+			  from default/don't correspond to phono. features
+			- user can do things like {a,e,o}i > i
+			- oh that gives me idea: unconditional changes have blank env field
+		- convert back to romanization
+			- (maybe have some kind of neutral metalinguistic romanization?)
+
+	- input:
+		- wordlist (can be separated by whatever delim)
+		- romanization/sound change file, one rule per line
+			- also where user-defined cats would go
+			- rules look like
+				C[-voice] > C[+voice] /V_V
+
+	- output:
+		- line-by-line, each line is of form
+			populum > pueblo
+		- user has option for output file to be in IPA
+		- also option for debug information about what rules apply where
+
+m	ɱ		n		ɳ	ɲ	ŋ	ɴ
+p			t		ʈ	c	k	q		ʔ
+b			d		ɖ	ɟ	g	ɢ
+ɓ			ɗ			ʄ	ɠ	ʛ
+ɸ	f	θ	s	ʃ	ʂ	ç	x	χ	ħ	h
+β	v	ð	z	ʒ	ʐ	ʝ	ɣ	ʁ	ʕ	ɦ
+			ɬ
+			ɮ
+ʙ			r					ʀ
+	ⱱ		ɾ		ɽ
+	ʋ		ɹ		ɻ	j	ɰ					w ʍ ɥ ʜ ʢ ʡ ɕ ʑ ɺ ɫ
+			l		ɭ	ʎ	ʟ
+
+i y		ɨ ʉ		ɯ u
+	ɪ ʏ		ʊ
+e ø		ɘ ɵ		ɤ o
+		ə								ɚ
+ɛ œ		ɜ ɞ		ʌ ɔ
+æ		ɐ
+a ɶ				ɑ ɒ
+
+∅
+
+̘	Advanced tongue root
+ʰ	Aspirated
+̤	Breathy-voiced
+̰	Creaky-voiced
+ʼ	Ejective
+ˀ	Glottalized
+ʷ	Labialized
+ˡ	Lateral release
+̼	Linguolabial
+ː	Long
+ⁿ	Nasal release
+̃	Nasalized
+̯	Non-syllabic
+ʲ	Palatalized
+ˤ	Pharyngealized
+ˈ	Primary stress
+̙	Retracted tongue root
+˞	Rhotic
+̩	Syllabic
+ˠ	Velarized
+ʱ	Voiced-aspirated
+◌̥	Voiceless
+̊	Voiceless (on descenders)
+
+features:
++/- nasal
++/- dorsal
++/- stop
++/- voice
++/- lateral
